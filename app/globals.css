@@ -1,0 +1,118 @@
+@import 'tailwindcss';
+
+@theme inline {
+  --font-display: var(--nf-display), 'Arial Black', Impact, sans-serif;
+  --font-sans: var(--nf-sans), system-ui, sans-serif;
+  --color-ink: #141414;
+  --color-paper: #fbf7f2;
+  --color-cream: #f3ece2;
+  --color-flavor: var(--c);
+  --color-accent: var(--a);
+  --color-deep: var(--d);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.22, 0.8, 0.22, 1);
+}
+
+:root {
+  --c: #ffd3e2;
+  --a: #ff2d78;
+  --d: #9e0b45;
+  --header-h: 72px;
+  color-scheme: light;
+}
+
+html {
+  background: var(--color-paper);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  letter-spacing: -0.012em;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--a);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 3px solid var(--a);
+  outline-offset: 3px;
+}
+
+/* Film grain over everything: keeps flat brand colours feeling printed, not digital */
+.grain {
+  position: fixed;
+  inset: -50%;
+  z-index: 40;
+  pointer-events: none;
+  opacity: 0.11;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 1.2s steps(6) infinite;
+}
+@keyframes grain {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-3%, 2%); }
+  40% { transform: translate(2%, -3%); }
+  60% { transform: translate(-2%, -1%); }
+  80% { transform: translate(3%, 3%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Halftone dot field used on stage backgrounds */
+.halftone {
+  background-image: radial-gradient(circle at center, rgb(20 20 20 / 0.11) 1.1px, transparent 1.6px);
+  background-size: 14px 14px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, #000 10%, transparent 75%);
+}
+
+/* Paper fibre texture for cream sections */
+.paper {
+  background-color: var(--color-cream);
+  background-image:
+    radial-gradient(ellipse at 20% 0%, rgb(255 255 255 / 0.7), transparent 55%),
+    repeating-linear-gradient(115deg, rgb(20 20 20 / 0.018) 0 2px, transparent 2px 7px);
+}
+
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--d);
+}
+.text-outline-ink {
+  color: transparent;
+  -webkit-text-stroke: 2px #141414;
+}
+
+.skew-brand {
+  transform: skewX(-10deg);
+}
+
+.stage-bg {
+  transition: background-color 0.9s cubic-bezier(0.22, 0.8, 0.22, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain { animation: none; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
